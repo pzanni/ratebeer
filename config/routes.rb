@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-<<<<<<< HEAD
+
   resources :beers
   resources :breweries
-=======
->>>>>>> 5cf86b1b7502e9eb52e814e732d0720e880a859e
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
