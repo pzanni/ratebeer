@@ -1,21 +1,31 @@
 <p id="notice"><%= notice %></p>
 
+<h2>
+  <%= @brewery.name %>
+</h2>
+
+<em>
+  Established at
+  <%= @brewery.year %>
+</em>
 
 <p>
-  <h2><%= @brewery.name %></h2>
+  Number of beers
+  <%= @brewery.beers.count %>
 </p>
 
-<p>Number of beers: <%= @brewery.beers.count %></p>
-
 <p>
-  <strong>Year:</strong>
-  <i><%= @brewery.year %></i>
+  <% @brewery.beers.each do |beer| %>
+    <%= link_to beer.name, beer %>
+  <% end %>
 </p>
 
 <p>
- <% @brewery.beers.each do |beer| %>
-   <%= link_to beer.name, beer %>
- <% end %>
+  <% if @brewery.ratings.empty? %>
+    brewery has no ratings
+  <% else %>
+    brewery has <%= pluralize(@brewery.ratings.count, 'rating') %>, average <%= @brewery.average_rating %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_brewery_path(@brewery) %> |
