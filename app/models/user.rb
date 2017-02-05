@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
   validates :username, length: { maximum: 30 }
   validates :password, length: {minimum: 4}
 
-  has_many :ratings
-  has_many :memberships
+  has_many :ratings, dependent: :destroy
+  has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
 
 end
