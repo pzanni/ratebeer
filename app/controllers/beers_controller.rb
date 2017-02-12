@@ -27,21 +27,7 @@ class BeersController < ApplicationController
 
   # POST /beers
   # POST /beers.json
-    def create
-    @beer = Beer.new(beer_params)
-
-    respond_to do |format|
-      if @beer.save
-        format.html { redirect_to beers_path, notice: 'Beer was successfully created.' }
-        format.json { render :show, status: :created, location: @beer }
-      else
-        @breweries = Brewery.all
-        @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
-        format.html { render :new }
-        format.json { render json: @beer.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+    
 
   # PATCH/PUT /beers/1
   # PATCH/PUT /beers/1.json
@@ -52,6 +38,22 @@ class BeersController < ApplicationController
         format.json { render :show, status: :ok, location: @beer }
       else
         format.html { render :edit }
+        format.json { render json: @beer.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+    def create
+    @beer = Beer.new(beer_params)
+
+    respond_to do |format|
+      if @beer.save
+        format.html { redirect_to beers_path, notice: 'Beer was successfully created.' }
+        format.json { render :show, status: :created, location: @beer }
+      else
+        @breweries = Brewery.all
+        @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]           
+        format.html { redirect_to new_beer_path, notice: 'Beer requires a name' }
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
     end

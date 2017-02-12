@@ -23,6 +23,8 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'simplecov', require: false
+
 gem 'bcrypt', '~> 3.1.7'
 
 group :development, :test do
@@ -32,6 +34,14 @@ end
 group :production do
    gem 'pg'
    gem 'rails_12factor'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.5'
 end
 
 ruby '2.3.1'
@@ -47,7 +57,13 @@ ruby '2.3.1'
 
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
+  #gem 'web-console', '~> 2.0'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'launchy'
 end
 
 group :development, :test do
