@@ -1,5 +1,6 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_that_signed_in, except: [:index, :show]
 
   # GET /beers
   # GET /beers.json
@@ -53,7 +54,7 @@ class BeersController < ApplicationController
       else
         @breweries = Brewery.all
         @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]           
-        format.html { redirect_to new_beer_path, notice: 'Beer requires a name' }
+        format.html { redirect_to new_beer_path, notice: "Name can't be blank" }
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
     end

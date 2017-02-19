@@ -1,21 +1,26 @@
 require 'rails_helper'
 
-describe "Beer" do
+include Helpers
 
-  it "when created with name, is added to the system" do
+describe "Beers" do
+  before :each do
+    FactoryGirl.create :user
+    FactoryGirl.create :brewery, name: "Schlenkerla"
+    sign_in(username:"Pekka", password:"Foobar1")
     visit new_beer_path
-    fill_in('beer_name', with:'Iso 3')
+  end
 
+  it "can be added if valid name given" do
+    fill_in('beer_name', with:'Urbock')
     expect{
       click_button('Create Beer')
     }.to change{Beer.count}.by(1)
   end
 
-  it "when created without name, is redirected back"  do
-    visit new_beer_path
-
-    click_button('Create Beer')
-    expect(current_path).to eq(new_beer_path)
-  end
-
+  it "can not be added if without name" do
+    expect{
+      click_button('Create Beer')
+    }.to change{Beer.count}.by(0)
+    expect(page).to have_content "Name can't be blank"
+  end  
 end

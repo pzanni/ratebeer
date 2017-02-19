@@ -31,7 +31,6 @@ describe "Rating" do
     rating1 = FactoryGirl.create :rating, beer:beer1, user:user
     rating2 = FactoryGirl.create :rating, beer:beer2, user:user
     visit ratings_path
-    save_and_open_page
 
     expect(page).to have_content 'iso 3'
     expect(page).to have_content 'Karhu'
