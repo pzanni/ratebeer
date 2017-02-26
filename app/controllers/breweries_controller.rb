@@ -4,6 +4,9 @@ class BreweriesController < ApplicationController
   # GET /breweries
   # GET /breweries.json
   def index
+    
+    @active_breweries = Brewery.active
+    @retired_breweries = Brewery.retired
     @breweries = Brewery.all
   end
 
@@ -20,6 +23,15 @@ class BreweriesController < ApplicationController
   # GET /breweries/1/edit
   def edit
   end
+
+  def set_brewery
+    @brewery = Brewery.find(params[:id])
+  end
+
+  def nayta
+     @brewery = Brewery.find(params[:panimo_id])
+     render :index
+   end
 
   # POST /breweries
   # POST /breweries.json
@@ -68,9 +80,9 @@ class BreweriesController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def brewery_params
-      params.require(:brewery).permit(:name, :year)
-    end
+      def brewery_params
+    params.require(:brewery).permit(:name, :year, :active)
+  end
 
 
 end

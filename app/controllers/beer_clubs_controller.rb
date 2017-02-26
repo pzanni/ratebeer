@@ -10,7 +10,13 @@ class BeerClubsController < ApplicationController
 
   # GET /beer_clubs/1
   # GET /beer_clubs/1.json
-  def show
+ def show
+    if current_user.is_member_of? @beer_club
+      @membership = current_user.memberships.find{ |m| m.beer_club == @beer_club }
+    else
+      @membership = Membership.new
+      @membership.beer_club = @beer_club      
+    end
   end
 
   # GET /beer_clubs/new
@@ -55,10 +61,12 @@ class BeerClubsController < ApplicationController
   # DELETE /beer_clubs/1
   # DELETE /beer_clubs/1.json
   def destroy
-    @beer_club.destroy
-    respond_to do |format|
-      format.html { redirect_to beer_clubs_url, notice: 'Beer club was successfully destroyed.' }
-      format.json { head :no_content }
+    if current_user.admin
+      @beer_club.destroy
+      respond_to do |format|
+        format.html { redirect_to beer_clubs_url, notice: 'Beer club was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 

@@ -43,3 +43,7 @@
   <%= link_to 'change password', edit_user_path(@user) %> <br>
   <%= link_to 'destroy', @user, method: :delete, data: { confirm: 'Are you sure?' }  %> 
 <% end %>
+
+
+<%= link_to 'block', block_path(@user), method: :post %>
+

@@ -1,8 +1,12 @@
-<p id="notice"><%= notice %></p>
+s<p id="notice"><%= notice %></p>
 
 <h2>
   <%= @brewery.name %>
 </h2>
+
+<% if not @brewery.active  %>
+    <span class="label label-info">retired</span>
+  <% end %>
 
 <em>
   Established at
@@ -28,5 +32,5 @@
   <% end %>
 </p>
 
-<%= link_to 'Edit', edit_brewery_path(@brewery) %> |
-<%= link_to 'Back', breweries_path %>
+<%= link_to 'Edit', edit_brewery_path(@brewery), class:'btn btn-primary' %> |
+<%= link_to 'Back', breweries_path, class: 'btn btn-primary' %>
