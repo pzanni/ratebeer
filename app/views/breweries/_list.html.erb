@@ -1,18 +1,10 @@
-<table class="table table-hover">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Year</th>
-  </tr>
-  </thead>
+<h2>Breweries</h2>
 
-  <tbody>
-  <% breweries.each do |brewery| %>
-      <tr>
-        <td><%= link_to brewery.name, brewery %></td>
-        <td><%= brewery.year %></td>
-        <td></td>
-      </tr>
-  <% end %>
-  </tbody>
+<table id="brewerytable" class="table table-hover">
+  <tr>
+    <th> <a href="#" id="name">Name</a> </th>
+    <th> <a href="#" id="year">Year</a> </th>
+    <th> <a href="#" id="beers">Beers</a> </th>
+  </tr>
+
 </table>

@@ -3,12 +3,21 @@ Rails.application.routes.draw do
   resources :memberships
   resources :beer_clubs
   resources :users
+  resources :users do
+    post 'toggle_frozen_user', on: :member
+  end
   resources :beers
   resources :breweries
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
   resources :ratings, only: [:index, :new, :create, :destroy]
   resource :session, only: [:new, :create, :destroy]
+  get 'auth/:provider/callback', to: 'sessions#create_oauth'
   get 'signup', to: 'users#new'
   get 'signin', to: 'sessions#new'
+  get 'beerlist', to:'beers#list'
+  get 'brewerylist', to:'breweries#list'
   delete 'signout', to: 'sessions#destroy'  
   root 'breweries#index'
   resources :places, only:[:index, :show]

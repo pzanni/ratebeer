@@ -29,6 +29,8 @@ gem 'simplecov', require: false
 
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'jquery-turbolinks'
+
 group :development, :test do
   gem 'sqlite3'
 end
@@ -46,6 +48,7 @@ end
 group :test do
   gem 'factory_girl_rails'
   gem 'webmock'
+  gem 'database_cleaner'
 end
 
 group :development, :test do
@@ -72,6 +75,8 @@ group :test do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'launchy'
+  gem 'selenium-webdriver', '2.53.4'
+  gem "chromedriver-helper"
 end
 
 group :development, :test do

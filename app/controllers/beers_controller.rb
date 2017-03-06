@@ -1,11 +1,19 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list]
 
   # GET /beers
   # GET /beers.json
-  def index
+   def index
     @beers = Beer.all
+
+    order = params[:order] || 'name'
+
+    @beers = case order
+      when 'name' then @beers.sort_by{ |b| b.name }
+      when 'brewery' then @beers.sort_by{ |b| b.brewery.name }
+      when 'style' then @beers.sort_by{ |b| b.style.name }
+    end
   end
 
   # GET /beers/1
@@ -15,17 +23,20 @@ class BeersController < ApplicationController
     @rating.beer = @beer
   end
 
+  def list
+  end
+
   # GET /beers/new
    def new
    @beer = Beer.new
    @breweries = Brewery.all
-   @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+   @styles = Style.all
  end
 
   # GET /beers/1/edit
   def edit
     @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter"]
+    @styles = Style.all
   end
 
   # POST /beers
@@ -65,13 +76,16 @@ class BeersController < ApplicationController
   # DELETE /beers/1
   # DELETE /beers/1.json
   def destroy
-    if current_user.admin
+    respond_to do |format|
+    #if current_user.is_admin
       @beer.destroy
-      respond_to do |format|
-        format.html { redirect_to beers_url, notice: 'Beer was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      format.html { redirect_to beers_path, notice: 'Beer was successfully deleted.' }
+      format.json { render :index }
+    #else
+      format.html { redirect_to beers_url, notice: 'You need to be admin to delete beer' }
+      format.json { render :index }
     end
+  #end
   end
 
   private

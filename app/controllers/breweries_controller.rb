@@ -1,18 +1,26 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list]
   # GET /breweries
   # GET /breweries.json
   def index
-    
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
     @breweries = Brewery.all
+
+    order = params[:order] || 'name'
+    @breweries= case order
+      when 'name' then @breweries.sort_by{ |b| b.name }
+      when 'year' then @breweries.sort_by{ |b| b.year}
+    end
   end
 
   # GET /breweries/1
   # GET /breweries/1.json
   def show
+  end
+
+  def list
   end
 
   # GET /breweries/new
@@ -22,6 +30,15 @@ class BreweriesController < ApplicationController
 
   # GET /breweries/1/edit
   def edit
+  end
+
+    def toggle_activity
+    brewery = Brewery.find(params[:id])
+    brewery.update_attribute :active, (not brewery.active)
+
+    new_status = brewery.active? ? "active" : "retired"
+
+    redirect_to :back, notice:"brewery activity status changed to #{new_status}"
   end
 
   def set_brewery

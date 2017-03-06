@@ -50,8 +50,17 @@ class User < ActiveRecord::Base
     averages_of_styles.sort_by{ |b| -b[:rating] }.first[:style]
   end  
 
+  def is_admin
+    return true if admin?
+    false
+  end
+
   def is_member_of?(beer_club)
     beer_clubs.include? beer_club
+  end  
+
+    def self.most_active(n)
+    sorted_by_rating_in_desc_order = User.all.sort_by{ |u| -(u.ratings.count) }[0,n]
   end  
                 
 end
